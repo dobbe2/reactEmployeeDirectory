@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import HomePage from "./components/pages/HomePage";
+import EmployeePage from "./components/pages/EmployeePage";
 import './App.css';
+import Employees from "./employees.json";
+import EmployeeList from "./components/EmployeeList"
 
-function App() {
+class App extends Component {
+
+  state = {
+    Employees
+  };
+
+  render() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+      <HomePage />
+        <header>Employee List</header>
+        {this.state.Employees.map(employee => (
+          <EmployeeList 
+            id={employee.id}
+            key={employee.key}
+            name={employee.name.first + " " + employee.name.last}
+            phone={employee.phone}
+            email={employee.email}
+            image={employee.picture.thumbnail}
+          />
+        ))}
+          
+      </div>
+    </Router>
   );
+}
 }
 
 export default App;
