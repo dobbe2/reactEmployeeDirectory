@@ -1,9 +1,21 @@
 
 import React from "react";
 
-function SearchBar() {
+function SearchBar(props) {
     return (
-        <input type="text" name="employee" placeholder="Search Employee Here" />
+    <div style={{margin:"20px"}}>
+        <input 
+        onChange={props.handleInputChange}
+        value={props.search}
+        type="text" 
+        name="search" 
+        placeholder="Search Employee Here"
+        id="search" 
+        />
+        <button onClick={props.handleFormSubmit}>
+        Search
+        </button>
+    </div>
     )
 }
 

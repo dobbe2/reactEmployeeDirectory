@@ -3,7 +3,7 @@ import React from "react";
 function HomePage() {
     return (
         <div>
-            <h1 className="header">List of Employees</h1>
+            <h1 className="header">Employee Directory</h1>
         </div>
     )
 }

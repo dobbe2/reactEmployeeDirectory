@@ -2,7 +2,7 @@ import React from "react";
 
 function Header(props) {
     return (
-        <header>Employee List</header>
+        <header style={{margin:"20px"}}>Employee List</header>
     )
 }
 

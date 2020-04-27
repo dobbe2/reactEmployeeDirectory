@@ -6,75 +6,48 @@ import API from "./utils/API";
 import Header from "./components/Header"
 import SearchBar from "./components/SearchBar"
 
-let employees= [{name:"James"}, {name:"Bob"}, {name:"Adam"}]
-
-function dynamicSort(property){
-  let sortOrder = 1;
-
-  if(property[0] === "-") {
-    sortOrder = -1;
-    property = property.substr(1);
-  }
-
-  return function(a,b) {
-    if (sortOrder === -1){
-      return b[property].localeCompare(a[property]);
-    } else {
-      return a[property].localeCompare(b[property]);
-    }
-  }
-}
-
-employees.sort(dynamicSort("name"));
-console.log(employees)
-
 class App extends Component {
 
   state = {
     employees: [],
     searchEmployees: []
   };
+  
 
   //when the component mounts, run API function
   componentDidMount() {
+    console.log(this.state)
     API.getRandomUsers()
       .then(res => {
         this.setState({ employees: res.data.results })
-        // console.log(res.data.results)
+        console.log(res.data.results);
+        console.log(this.state)
       })
       .catch(err => console.log(err));
   };
+  
 
-  dynamicSort = property => {
-    let sortOrder = 1;
-  
-    if(property[0] === "-") {
-      sortOrder = -1;
-      property = property.substr(1);
-    }
-  
-    return function(a,b) {
-      if (sortOrder === -1){
-        return b[property].localeCompare(a[property]);
-      } else {
-        return a[property].localeCompare(b[property]);
-      }
-    }
-  }
-  
-  // handleFormSubmit = event => {
-  //   //prevent default from form
-  //   event.preventDefault();
-  //   if (!this.state.searchEmployees) {
-  //     alert("Please enter a name to find");
-  //   }
-  // }
+//  handleInputChange = event => {
+//    const name = event.target.name;
+//    const value = event.target.value;
+//    this.setState({
+//      [name]: value
+//    });
+//  };
+
+//  handleFormSubmit = event => {
+//    event.preventDefault();
+//    this.API.getRandomUsers(this.state.search)
+//  };
 
   render() {
     return (
       <div>
         <HomePage />
-          <SearchBar />
+          <SearchBar
+          search={this.state.search}
+          handleFormSubmit={this.handleFormSubmit}
+          handleInputChange={this.handleInputChange} />
             <Header />
               {this.state.employees.map(employee => (
                 <EmployeeList
