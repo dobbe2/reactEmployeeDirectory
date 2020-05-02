@@ -26,21 +26,32 @@ class App extends Component {
       .catch(err => console.log(err));
   };
   
-
-//  handleInputChange = event => {
-//    const name = event.target.name;
-//    const value = event.target.value;
-//    this.setState({
-//      [name]: value
-//    });
-//  };
+ handleInputChange = event => {
+   const value = event.target.value;
+   console.log(value);
+   const filteredList = this.state.employees.filter(employee => {
+     let values = Object.values(employee).join("").toLowerCase()
+     return values.indexOf(value.toLowerCase()) !== -1
+   })
+   this.setState({
+     searchEmployees: filteredList
+   }, () => {console.log(this.state)})
+  };
 
 //  handleFormSubmit = event => {
 //    event.preventDefault();
-//    this.API.getRandomUsers(this.state.search)
+//    this.setState({employees:filteredList})
 //  };
 
+  //  var input;
+  //  if (!filteredList) {
+  //   this.setState({employees: employees})
+  //  } else {
+  //    this.setState({employees: filteredList})
+  //  }
   render() {
+
+    
     return (
       <div>
         <HomePage />
@@ -49,10 +60,22 @@ class App extends Component {
           handleFormSubmit={this.handleFormSubmit}
           handleInputChange={this.handleInputChange} />
             <Header />
-              {this.state.employees.map(employee => (
+
+              {this.state.searchEmployees.length > 0 ? 
+                this.state.searchEmployees.map((employee, index) => (
                 <EmployeeList
                   id={employee.id}
-                  key={employee.key}
+                  key={index}
+                  name={employee.name.first + " " + employee.name.last}
+                  phone={employee.phone}
+                  email={employee.email}
+                  image={employee.picture.medium}
+                />
+            )) :
+              this.state.employees.map((employee, index) => (
+                <EmployeeList
+                  id={employee.id}
+                  key={index}
                   name={employee.name.first + " " + employee.name.last}
                   phone={employee.phone}
                   email={employee.email}
